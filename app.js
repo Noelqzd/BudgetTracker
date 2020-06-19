@@ -8,12 +8,12 @@ let budgetController = (function () {
 //UI Controller
 let UIController = (function () {
 
-let DOMstrings = {
-    inputType: '.add__type',
-    inputDescription: '.add__description',
-    inputValue: '.add__value',
-    inputBtn: '.add__btn'
-};
+    let DOMstrings = {
+        inputType: '.add__type',
+        inputDescription: '.add__description',
+        inputValue: '.add__value',
+        inputBtn: '.add__btn'
+    };
 
     return {
         getInput: function () {
@@ -26,9 +26,9 @@ let DOMstrings = {
 
         },
 
-    getDOMstrings: function() {
-        return DOMstrings;
-    }
+        getDOMstrings: function () {
+            return DOMstrings;
+        }
 
     };
 
@@ -38,12 +38,23 @@ let DOMstrings = {
 //Global App Controller
 let controller = (function (budgetCtrl, UICtrl) {
 
-    let DOM = UICtrl.getDOMstrings();
+    let setupEventListners = function () {
+        let DOM = UICtrl.getDOMstrings();
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress', function (event) {
+            if (event.keyCode === 13 || event.which === 13) {
+                ctrlAddItem();
+            }
+
+        });
+    };
 
     let ctrlAddItem = function () {
+
         // 1.- Get the field input data
         let input = UICtrl.getInput();
-        console.log(input);
 
 
         //2.- Add the item to budget controller
@@ -53,19 +64,16 @@ let controller = (function (budgetCtrl, UICtrl) {
         //4.- Calculate Budget
 
         //5.- Display the budget
-        
-    }
 
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+    };
 
-    document.addEventListener('keypress', function (event) {
-
-        if (event.keyCode === 13 || event.which === 13) {
-            ctrlAddItem();
+    return {
+        init: function () {
+            console.log('Application has started');
+            setupEventListners();
         }
-
-    });
+    };
 
 })(budgetController, UIController);
 
-
+controller.init();

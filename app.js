@@ -6,38 +6,65 @@ let budgetController = (function () {
 })();
 
 //UI Controller
-let UIController = (function(){
+let UIController = (function () {
 
-    //code later
+let DOMstrings = {
+    inputType: '.add__type',
+    inputDescription: '.add__description',
+    inputValue: '.add__value',
+    inputBtn: '.add__btn'
+};
+
+    return {
+        getInput: function () {
+            return {
+
+                type: document.querySelector(DOMstrings.inputType).value, // Will be inc or exp
+                description: document.querySelector(DOMstrings.inputDescription).value,
+                value: document.querySelector(DOMstrings.inputValue).value
+            };
+
+        },
+
+    getDOMstrings: function() {
+        return DOMstrings;
+    }
+
+    };
 
 })();
 
 
 //Global App Controller
-let controller = (function(budgetCtrl, UICtrl){
-    
-let ctrlAddItem = function(){
- // 1.- Get the field input data
+let controller = (function (budgetCtrl, UICtrl) {
 
-       //2.- Add the item to budget controller
+    let DOM = UICtrl.getDOMstrings();
 
-       //3.- Add the item to user interface
+    let ctrlAddItem = function () {
+        // 1.- Get the field input data
+        let input = UICtrl.getInput();
+        console.log(input);
 
-       //4.- Calculate Budget
 
-       //5.- Display the budget
-       console.log('it works');
-}
+        //2.- Add the item to budget controller
 
-document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+        //3.- Add the item to user interface
 
-document.addEventListener('keypress', function(event) {
+        //4.- Calculate Budget
 
-    if (event.keyCode === 13 || event.which === 13) {
-        ctrlAddItem();
+        //5.- Display the budget
+        
     }
 
-});
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+    document.addEventListener('keypress', function (event) {
+
+        if (event.keyCode === 13 || event.which === 13) {
+            ctrlAddItem();
+        }
+
+    });
 
 })(budgetController, UIController);
 

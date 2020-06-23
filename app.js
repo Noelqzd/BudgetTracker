@@ -96,7 +96,23 @@ let UIController = (function () {
             newHtml = newHtml.replace('%description%', obj.description);
             newHtml = newHtml.replace('%value%', obj.value);
             //Insert the HTML into the DOM
+
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
+
+        clearFields: function () {
+            let fields, fieldsArr;
+
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+
+            fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach(function(current, index, array) {
+                 current.value = "";
+            });
+
+           fieldsArr[0].focus();
+
         },
 
         getDOMstrings: function () {
@@ -134,6 +150,9 @@ let controller = (function (budgetCtrl, UICtrl) {
 
         //3.- Add the item to UI
         UICtrl.addListItem(newItem, input.type);
+
+        //3.5.- Clear Fields
+        UICtrl.clearFields();
 
         //4.- Calculate Budget
 

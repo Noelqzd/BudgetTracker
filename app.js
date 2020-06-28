@@ -71,7 +71,7 @@ let budgetController = (function () {
             index = ids.indexOf(id);
 
             if (index !== -1) {
-                 data.allItems[type].splice(index, 1);
+                data.allItems[type].splice(index, 1);
             }
 
         },
@@ -159,6 +159,12 @@ let UIController = (function () {
             //Insert the HTML into the DOM
 
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
+
+        deleteListItem: function (selectorID) {
+
+            let el = document.getElementById(selectorID)
+            el.parentNode.removeChild(el);
         },
 
         clearFields: function () {
@@ -267,9 +273,10 @@ let controller = (function (budgetCtrl, UICtrl) {
             budgetController.deleteItem(type, ID);
 
             //2. Delete item from UI
-
+             UICtrl.deleteListItem(itemID);
 
             //3. Update and show the new budget
+            updateBudget();
         }
 
     };

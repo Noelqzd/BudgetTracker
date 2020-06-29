@@ -105,6 +105,7 @@ let budgetController = (function () {
             } else {
                 data.percentage = -1;
             }
+            
         },
 
         calculatePercantages: function () {

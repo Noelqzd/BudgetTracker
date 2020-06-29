@@ -179,6 +179,12 @@ let UIController = (function () {
 
     };
 
+    let NodeListForEach = function (list, callback) {
+        for (let i = 0; i < list.length; i++) {
+            callback(list[i], i);
+        }
+    };
+
     return {
         getInput: function () {
             return {
@@ -253,12 +259,6 @@ let UIController = (function () {
 
             let fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
 
-            let NodeListForEach = function (list, callback) {
-                for (let i = 0; i < list.length; i++) {
-                    callback(list[i], i);
-                }
-            };
-
             NodeListForEach(fields, function (current, index) {
 
                 if (percentages[index] > 0) {
@@ -275,7 +275,7 @@ let UIController = (function () {
             let now, months, month, year;
 
             now = new Date();
-            
+
             months = ['January', ' February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
             month = now.getMonth();
 
@@ -283,6 +283,21 @@ let UIController = (function () {
             document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
         },
 
+        changedType: function () {
+
+            let fieds = document.querySelectorAll(
+                DOMstrings.inputType + ',' +
+                DOMstrings.inputDescription + ',' +
+                DOMstrings.inputValue);
+
+          NodeListForEach(fieds, function(cur) {
+              cur.classList.toggle('red-focus');
+          });
+
+          document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
+        
+
+        },
 
         getDOMstrings: function () {
             return DOMstrings;
@@ -309,6 +324,10 @@ let controller = (function (budgetCtrl, UICtrl) {
         });
 
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
+
+
     };
 
 
